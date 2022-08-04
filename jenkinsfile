@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+        stages {
+            stage('Maven') {
+                steps {
+                    git 'https://github.com/mohankrishna12-tech/hello-world-servlet.git'
+                    sh 'maven test'
+                    archiveArtifacts artifacts: 'target/surefire-reports/**'
+                }
+            }
+            stage('build') {
+                steps {
+                    sh 'mvn clean package -DskipTests'
+                    archiveArtifacts artifacts: 'target/*.jar'
+                }
+            }
+            stage('Deploy') {
+                steps {
+                    sh 'echo Deploy'
+                }
+            }
+        }
+}
+                
+            
+            
